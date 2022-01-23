@@ -23,6 +23,7 @@ class _ToggleSecondPageState extends State<ToggleSecondPage> {
   Widget build(BuildContext context) {
     double phoneWidth = context.watch<Controller>().phoneWidth;
     double phoneheight = context.watch<Controller>().phoneheight;
+    debugPrint(phoneheight.toString());
 
     debugPrint(phoneWidth.toString() + "," + phoneheight.toString());
     double convertSizeWidth(double value) {
@@ -108,24 +109,38 @@ class _ToggleSecondPageState extends State<ToggleSecondPage> {
                   Container(
                     decoration:
                         BoxDecoration(borderRadius: BorderRadius.circular(15)),
-                    margin: EdgeInsets.only(top: convertSizeheight(50)),
+                    margin: EdgeInsets.only(
+                      top: phoneheight <= 700
+                          ? convertSizeheight(20)
+                          : convertSizeheight(50),
+                    ),
                     alignment: Alignment.center,
-                    height: convertSizeheight(420),
-                    width: convertSizeheight(350),
+                    height: phoneheight <= 700
+                        ? convertSizeheight(420)
+                        : convertSizeheight(500),
+                    width: convertSizeWidth(350),
                     child: ListView.builder(
                         itemCount: 10,
                         itemBuilder: (context, index) {
                           return Card(
+                            color: Colors.blueAccent.withOpacity(0.1),
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(15.0),
                             ),
-                            color: Colors.white.withOpacity(0.1),
                             elevation: 10,
-                            child: ListTile(
-                              textColor: Colors.white,
-                              trailing: Image.asset("assets/cloud.png"),
-                              title: Text(
-                                  "Salı \t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t 4° / 20°"),
+                            child: Container(
+                              alignment: Alignment.center,
+                              height: convertSizeheight(100),
+                              child: ListTile(
+                                textColor: Colors.white,
+                                trailing: Image.asset(
+                                  "assets/cloud.png",
+                                  height: convertSizeheight(100),
+                                  width: convertSizeWidth(100),
+                                ),
+                                title: Text(
+                                    "Salı \t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t 4° / 20°"),
+                              ),
                             ),
                           );
                         }),

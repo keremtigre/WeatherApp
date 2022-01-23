@@ -55,7 +55,11 @@ class _HomePageState extends State<HomePage> {
               child: Column(
                 children: [
                   Padding(
-                    padding: EdgeInsets.only(top: convertSizeheight(50)),
+                    padding: EdgeInsets.only(
+                      top: phoneheight <= 700
+                          ? convertSizeheight(50)
+                          : convertSizeheight(80),
+                    ),
                     child: Text(
                       "San Fransisco",
                       style: TextStyle(color: Colors.white, fontSize: 25),
@@ -115,80 +119,102 @@ class _HomePageState extends State<HomePage> {
                       ),
                     ),
                   ),
-                  Image.asset("assets/cloud.png",
-                      width: double.infinity, height: convertSizeheight(220)),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      Column(
-                        children: [
-                          Text(
-                            "Temp",
-                            textAlign: TextAlign.center,
-                            style: TextStyle(color: Colors.white70),
-                          ),
-                          SizedBox(
-                            height: convertSizeheight(5),
-                          ),
-                          Text(
-                            "32°",
-                            textAlign: TextAlign.center,
-                            style: TextStyle(color: Colors.white, fontSize: 20),
-                          )
-                        ],
-                      ),
-                      Column(
-                        children: [
-                          Text(
-                            "Wind",
-                            textAlign: TextAlign.center,
-                            style: TextStyle(color: Colors.white70),
-                          ),
-                          SizedBox(
-                            height: convertSizeheight(5),
-                          ),
-                          Text(
-                            "10km/h",
-                            textAlign: TextAlign.center,
-                            style: TextStyle(color: Colors.white, fontSize: 20),
-                          )
-                        ],
-                      ),
-                      Column(
-                        children: [
-                          Text(
-                            "Nem",
-                            textAlign: TextAlign.center,
-                            style: TextStyle(color: Colors.white70),
-                          ),
-                          SizedBox(
-                            height: convertSizeheight(5),
-                          ),
-                          Text(
-                            "%75",
-                            textAlign: TextAlign.center,
-                            style: TextStyle(color: Colors.white, fontSize: 20),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                  Container(
-                    alignment: Alignment.topLeft,
+                  Padding(
                     padding: EdgeInsets.only(
-                        top: convertSizeWidth(30),
-                        left: convertSizeWidth(20),
-                        bottom: convertSizeheight(20)),
-                    child: Text(
-                      "Today",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(color: Colors.white, fontSize: 20),
+                      top: phoneheight <= 700
+                          ? convertSizeheight(1)
+                          : convertSizeheight(20),
                     ),
+                    child: Image.asset("assets/cloud.png",
+                        width: double.infinity, height: convertSizeheight(220)),
                   ),
                   Padding(
-                    padding: EdgeInsets.only(left: convertSizeWidth(20)),
-                    child: SizedBox(
-                      height: convertSizeheight(100),
+                    padding: EdgeInsets.only(
+                      top: phoneheight <= 700
+                          ? convertSizeheight(1)
+                          : convertSizeheight(20),
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Column(
+                          children: [
+                            Text(
+                              "Temp",
+                              textAlign: TextAlign.center,
+                              style: TextStyle(color: Colors.white70),
+                            ),
+                            SizedBox(
+                              height: convertSizeheight(5),
+                            ),
+                            Text(
+                              "32°",
+                              textAlign: TextAlign.center,
+                              style:
+                                  TextStyle(color: Colors.white, fontSize: 20),
+                            )
+                          ],
+                        ),
+                        Column(
+                          children: [
+                            Text(
+                              "Wind",
+                              textAlign: TextAlign.center,
+                              style: TextStyle(color: Colors.white70),
+                            ),
+                            SizedBox(
+                              height: convertSizeheight(5),
+                            ),
+                            Text(
+                              "10km/h",
+                              textAlign: TextAlign.center,
+                              style:
+                                  TextStyle(color: Colors.white, fontSize: 20),
+                            )
+                          ],
+                        ),
+                        Column(
+                          children: [
+                            Text(
+                              "Nem",
+                              textAlign: TextAlign.center,
+                              style: TextStyle(color: Colors.white70),
+                            ),
+                            SizedBox(
+                              height: convertSizeheight(5),
+                            ),
+                            Text(
+                              "%75",
+                              textAlign: TextAlign.center,
+                              style:
+                                  TextStyle(color: Colors.white, fontSize: 20),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                  Expanded(
+                    flex: 1,
+                    child: Container(
+                      alignment: Alignment.topLeft,
+                      padding: EdgeInsets.only(
+                        top: phoneheight <= 700
+                            ? convertSizeheight(60)
+                            : convertSizeheight(100),
+                        left: convertSizeWidth(20),
+                      ),
+                      child: Text(
+                        "Today",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(color: Colors.white, fontSize: 20),
+                      ),
+                    ),
+                  ),
+                  Expanded(
+                    flex: 1,
+                    child: Padding(
+                      padding: EdgeInsets.only(bottom: convertSizeheight(20)),
                       child: ListView.builder(
                           shrinkWrap: true,
                           scrollDirection: Axis.horizontal,
@@ -238,22 +264,17 @@ class _HomePageState extends State<HomePage> {
                 ],
               ),
             ),
-            bottomNavigationBar: SizedBox(
-              height: convertSizeheight(60),
-              width: double.infinity,
-              child: BottomNavigationBar(
-                backgroundColor: Color.fromRGBO(7, 7, 35, 1),
-                unselectedItemColor: Colors.white,
-                type: BottomNavigationBarType.fixed,
-                items: [
-                  BottomNavigationBarItem(
-                      icon: Icon(Icons.home), label: "home"),
-                  BottomNavigationBarItem(
-                      icon: Icon(Icons.school), label: "orta"),
-                  BottomNavigationBarItem(
-                      icon: Icon(Icons.settings), label: "settings"),
-                ],
-              ),
+            bottomNavigationBar: BottomNavigationBar(
+              backgroundColor: Color.fromRGBO(7, 7, 35, 1),
+              unselectedItemColor: Colors.white,
+              type: BottomNavigationBarType.fixed,
+              items: [
+                BottomNavigationBarItem(icon: Icon(Icons.home), label: "home"),
+                BottomNavigationBarItem(
+                    icon: Icon(Icons.school), label: "orta"),
+                BottomNavigationBarItem(
+                    icon: Icon(Icons.settings), label: "settings"),
+              ],
             ),
           )
         : ToggleSecondPage();
