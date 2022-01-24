@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_weather_app/controller/controller.dart';
+import 'package:flutter_weather_app/helper/data_helper.dart';
 import 'package:flutter_weather_app/screens/homePage/homepage.dart';
 import 'package:flutter_weather_app/screens/homePage/widgets/text_widget.dart';
+import 'package:flutter_weather_app/screens/selectCountryPage/selectCountryPage.dart';
 import 'package:provider/src/provider.dart';
 
 class ToggleSecondPage extends StatefulWidget {
@@ -41,18 +43,7 @@ class _ToggleSecondPageState extends State<ToggleSecondPage> {
               body: Container(
                 height: double.infinity,
                 width: double.infinity,
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    colors: [
-                      Color.fromRGBO(7, 7, 35, 1),
-                      Color.fromRGBO(7, 15, 63, 1),
-                      Color.fromRGBO(9, 54, 97, 1),
-                    ],
-                    stops: [0.5, 0.8, 1],
-                    begin: Alignment.bottomLeft,
-                    end: Alignment.topRight,
-                  ),
-                ),
+                decoration: DataHelper().AppBackgroundColorsDecoration,
                 child: Column(
                   children: [
                     Padding(
@@ -74,7 +65,7 @@ class _ToggleSecondPageState extends State<ToggleSecondPage> {
                               maxHeight: convertSizeheight(40)),
                           selectedColor: Colors.white,
                           color: Colors.white,
-                          fillColor: Color.fromRGBO(27, 134, 230, 1),
+                          fillColor: Colors.blue.shade700,
                           disabledColor: Colors.white,
                           borderRadius: BorderRadius.circular(10),
                           onPressed: (index) {
@@ -126,7 +117,9 @@ class _ToggleSecondPageState extends State<ToggleSecondPage> {
                               return Container(
                                 decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(20),
-                                    color: Color.fromRGBO(27, 134, 230, 0.1)),
+                                    color: index == 0
+                                        ? Colors.blue.shade700
+                                        : Color.fromRGBO(27, 134, 230, 0.1)),
                                 margin:
                                     EdgeInsets.only(top: convertSizeWidth(20)),
                                 width: convertSizeWidth(160),
@@ -163,19 +156,6 @@ class _ToggleSecondPageState extends State<ToggleSecondPage> {
                     )
                   ],
                 ),
-              ),
-              bottomNavigationBar: BottomNavigationBar(
-                backgroundColor: Color.fromRGBO(7, 7, 35, 1),
-                unselectedItemColor: Colors.white,
-                type: BottomNavigationBarType.fixed,
-                items: [
-                  BottomNavigationBarItem(
-                      icon: Icon(Icons.home), label: "home"),
-                  BottomNavigationBarItem(
-                      icon: Icon(Icons.school), label: "orta"),
-                  BottomNavigationBarItem(
-                      icon: Icon(Icons.settings), label: "settings"),
-                ],
               ),
             ),
           )

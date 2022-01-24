@@ -1,10 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 Widget CreateText(String text, Color color, double fontSize) {
   return Text(
     text,
     style: TextStyle(color: color, fontSize: fontSize),
+  );
+}
+
+Widget CreateText2(
+    String text, Color color, double fontSize, FontWeight fontWeight) {
+  return Text(
+    text,
+    style: TextStyle(color: color, fontSize: fontSize, fontWeight: fontWeight),
   );
 }
 
