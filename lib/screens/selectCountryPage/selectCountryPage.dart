@@ -13,11 +13,11 @@ class SelectCountryWidget extends StatefulWidget {
 
 class _SelectCountryWidgetState extends State<SelectCountryWidget> {
   String ButtonText = "";
-  int denemeIndex = 6;
-  // TODO: implement initState
+  late List<String> SecilenSehirler;
 
   @override
   Widget build(BuildContext context) {
+    SecilenSehirler = context.watch<Controller>().GetSecilenSehirListesi;
     double phoneWidth = context.watch<Controller>().phoneWidth;
     double phoneheight = context.watch<Controller>().phoneheight;
     double convertSizeWidth(double value) {
@@ -77,7 +77,7 @@ class _SelectCountryWidgetState extends State<SelectCountryWidget> {
                                   Expanded(
                                     child: Container(
                                       height: convertSizeheight(800),
-                                      width: convertSizeWidth(250),
+                                      width: convertSizeWidth(600),
                                       child: ListView.builder(
                                           itemCount: 81,
                                           itemBuilder: (context, index) {
@@ -95,8 +95,8 @@ class _SelectCountryWidgetState extends State<SelectCountryWidget> {
                                                       borderRadius:
                                                           BorderRadius.circular(
                                                               20)),
-                                                  padding: EdgeInsets.all(13),
-                                                  margin: EdgeInsets.all(13),
+                                                  padding: EdgeInsets.all(10),
+                                                  margin: EdgeInsets.all(10),
                                                   child: Text(
                                                     cities[index],
                                                     style: TextStyle(
@@ -128,13 +128,12 @@ class _SelectCountryWidgetState extends State<SelectCountryWidget> {
                         onPressed: () {
                           setState(() {});
                           if (!ButtonText.isEmpty && ButtonText != null) {
-                            denemeIndex++;
-                            context
-                                .read<Controller>()
-                                .setSecilenSehir(ButtonText);
-                            debugPrint(
-                                Provider.of<Controller>(context, listen: false)
-                                    .secilenSehir);
+                            context.read<Controller>().SehirEkle(ButtonText);
+                            for (int i = 0; i < SecilenSehirler.length; i++) {
+                              debugPrint(
+                                  "Secilen sehirler $i: " + SecilenSehirler[i]);
+                            }
+                            ButtonText = "";
                           }
                         },
                         child: Icon(Icons.add)),
@@ -145,97 +144,136 @@ class _SelectCountryWidgetState extends State<SelectCountryWidget> {
             Expanded(
                 child: SizedBox(
               height: convertSizeheight(400),
-              width: convertSizeWidth(800),
+              width: convertSizeWidth(600),
               child: GridView.builder(
-                itemCount: denemeIndex,
+                itemCount: SecilenSehirler.length,
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2,
-                  crossAxisSpacing: 2,
+                  crossAxisSpacing: 10,
                   mainAxisSpacing: 10,
                 ),
                 itemBuilder: (context, index) {
-                  return Container(
-                    padding: EdgeInsets.all(10),
-                    margin: EdgeInsets.only(
-                      top: convertSizeheight(20),
-                      left: convertSizeWidth(5),
-                      right: convertSizeWidth(5),
-                    ),
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20),
-                        color: index == 2
-                            ? Colors.blue.shade700
-                            : Colors.blue.withOpacity(0.2)),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: [
-                              CreateText("32°", Colors.white, 20),
-                              CreateText2(
-                                  "Bulutlu", Colors.white, 18, FontWeight.w300),
-                              Padding(
-                                padding:
-                                    EdgeInsets.only(left: convertSizeWidth(8)),
-                                child: CreateTextWithAlign(
-                                    "Denizli",
-                                    Colors.white,
-                                    phoneWidth > 300 ? 18 : 13,
-                                    TextAlign.center),
-                              ),
-                            ],
-                          ),
-                        ),
-                        Expanded(
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: [
-                              Expanded(
-                                child: Image.asset(
-                                  "assets/cloud.png",
-                                  alignment: Alignment.topCenter,
-                                  height: convertSizeheight(250),
-                                  width: convertSizeWidth(250),
+                  return InkWell(
+                    onTap: () {
+                      setState(() {});
+                      context
+                          .read<Controller>()
+                          .setSecilenSehir(SecilenSehirler[index]);
+                      context.read<Controller>().SetSehirIndex(index);
+                      debugPrint("Şehirle Listesi $index: " +
+                          SecilenSehirler[index] +
+                          " Seçilmiş olan şehir: " +
+                          Provider.of<Controller>(context, listen: false)
+                              .secilenSehir +
+                          "SeçilenŞehirindex: " +
+                          Provider.of<Controller>(context, listen: false)
+                              .secilenSehirIndex
+                              .toString());
+                    },
+                    child: Container(
+                      padding: EdgeInsets.all(10),
+                      margin: EdgeInsets.only(
+                        top: convertSizeheight(20),
+                        left: convertSizeWidth(5),
+                        right: convertSizeWidth(5),
+                      ),
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(20),
+                          color:
+                              context.watch<Controller>().secilenSehirIndex ==
+                                      index
+                                  ? Colors.blue.shade700
+                                  : Colors.blue.withOpacity(0.2)),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              children: [
+                                CreateText("32°", Colors.white, 20),
+                                CreateText2("Bulutlu", Colors.white, 18,
+                                    FontWeight.w300),
+                                Padding(
+                                  padding: EdgeInsets.only(
+                                      left: convertSizeWidth(8)),
+                                  child: CreateTextWithAlign(
+                                      SecilenSehirler[index],
+                                      Colors.white,
+                                      phoneWidth > 300 ? 16 : 13,
+                                      TextAlign.center),
                                 ),
-                              ),
-                              Expanded(
-                                child: Column(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceAround,
-                                  children: [
-                                    Expanded(
-                                      child: Padding(
-                                        padding: EdgeInsets.only(
-                                            top: phoneWidth > 300
-                                                ? convertSizeheight(40)
-                                                : convertSizeheight(20),
-                                            left: phoneWidth > 300
-                                                ? convertSizeWidth(40)
-                                                : convertSizeWidth(20)),
-                                        child: InkWell(
-                                          onTap: () {
-                                            setState(() {});
-                                            denemeIndex--;
-                                          },
-                                          child: Icon(
-                                            Icons.delete_rounded,
-                                            color: Colors.red,
-                                            size: convertSizeWidth(30),
+                              ],
+                            ),
+                          ),
+                          Expanded(
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              children: [
+                                Expanded(
+                                  child: Image.asset(
+                                    "assets/cloud.png",
+                                    alignment: Alignment.topCenter,
+                                    height: convertSizeheight(250),
+                                    width: convertSizeWidth(250),
+                                  ),
+                                ),
+                                Expanded(
+                                  child: Column(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceAround,
+                                    children: [
+                                      Expanded(
+                                        child: Padding(
+                                          padding: EdgeInsets.only(
+                                              top: phoneWidth > 300
+                                                  ? convertSizeheight(40)
+                                                  : convertSizeheight(20),
+                                              left: phoneWidth > 300
+                                                  ? convertSizeWidth(40)
+                                                  : convertSizeWidth(20)),
+                                          child: InkWell(
+                                            onTap: () {
+                                              setState(() {});
+                                              context
+                                                  .read<Controller>()
+                                                  .SehirSil(index);
+                                              for (int i = 0;
+                                                  i < SecilenSehirler.length;
+                                                  i++) {
+                                                debugPrint(
+                                                    "Şehirle Listesi $i: " +
+                                                        SecilenSehirler[i] +
+                                                        " Seçilmiş olan şehir: " +
+                                                        Provider.of<Controller>(
+                                                                context,
+                                                                listen: false)
+                                                            .secilenSehir +
+                                                        Provider.of<Controller>(
+                                                                context,
+                                                                listen: false)
+                                                            .secilenSehirIndex
+                                                            .toString());
+                                              }
+                                            },
+                                            child: Icon(
+                                              Icons.delete_rounded,
+                                              color: Colors.red,
+                                              size: convertSizeWidth(30),
+                                            ),
                                           ),
                                         ),
                                       ),
-                                    ),
-                                  ],
+                                    ],
+                                  ),
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   );
                 },
