@@ -14,7 +14,10 @@ class _PagesRouteState extends State<PagesRoute> {
   late List<Widget> _pages;
   @override
   void initState() {
-    _pages = [HomePage(), SelectCountryWidget()];
+    _pages = [
+      HomePage(),
+      SelectCountryWidget(),
+    ];
     _currentIndex = 0;
     // TODO: implement initState
     super.initState();
@@ -36,7 +39,8 @@ class _PagesRouteState extends State<PagesRoute> {
         type: BottomNavigationBarType.fixed,
         items: [
           BottomNavigationBarItem(icon: Icon(Icons.home), label: "home"),
-          BottomNavigationBarItem(icon: Icon(Icons.school), label: "orta"),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.location_on), label: "Şehirlerim"),
         ],
         onTap: (index) {
           setState(() {
