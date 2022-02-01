@@ -1,7 +1,9 @@
 
 
 # Weather App
- Bu uygulamda json api kullanarak bir WeatherApp yaptım. State Management olarak Provider paketini kullandım. 81 ilin anlık ve ya günlük hava durumlarını görebilir, şehirlerim kısmından ise yeni şehir ekleyebilir veya seçebilirsiniz.
+ Bu uygulamda json api kullanarak bir WeatherApp yaptım. State Management olarak Provider paketini kullandım. 81 ilin anlık veya günlük hava durumlarını görebilir, şehirlerim kısmından ise yeni şehir ekleyebilir veya seçebilirsiniz.
+ 
+ ### Dikkat!!!!! Uygulamayı Çalıştırmak İçin Lütfen Weatherapi.com üzerinden bir ücretsiz API key alıp, service klasörü içerisindeki service.dart dosyasına API keyinizi belirtiniz.
  
  ## Kullandığım Paketler  
 
